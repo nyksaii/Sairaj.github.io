@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sairaj Naik — Student &amp; Developer</title>
+<meta name="description" content="Portfolio of Sairaj Naik — a student with a strong interest in technology, programming and innovation." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --accent-color: #C2410C;
+  --accent-soft: rgba(194, 65, 12, 0.10);
+  --accent-line: rgba(194, 65, 12, 0.28);
+
+  --bg: #FAF8F4;
+  --bg-tint: #F3EFE8;
+  --surface: #FFFFFF;
+  --ink: #14120F;
+  --ink-soft: #3A3630;
+  --muted: #6B665E;
+  --line: rgba(20, 18, 15, 0.10);
+  --line-strong: rgba(20, 18, 15, 0.18);
+
+  --font-display: "Instrument Serif", "Times New Roman", Georgia, serif;
+  --font-body: "DM Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 26px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --shell: 1140px;
+}
+
+*, *::before, *::after{ box-sizing: border-box; }
+
+html{ scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body{
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(900px 480px at 12% -8%, rgba(194, 65, 12, 0.07), transparent 62%),
+    radial-gradient(760px 420px at 96% 4%, rgba(20, 18, 15, 0.05), transparent 60%);
+  background-repeat: no-repeat;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4{ margin: 0; color: var(--ink); font-weight: 400; line-height: 1.04; letter-spacing: -0.02em; }
+p{ margin: 0; }
+a{ color: inherit; text-decoration: none; }
+img{ display: block; max-width: 100%; }
+button{ font: inherit; color: inherit; background: none; border: 0; }
+
+/* Text selection — accent background, readable contrast */
+::selection{ background: var(--accent-color); color: #FFF7F2; text-shadow: none; }
+::-moz-selection{ background: var(--accent-color); color: #FFF7F2; text-shadow: none; }
+
+/* ============================================================
+   CUSTOM CURSOR
+   ============================================================ */
+body, a, button, [role="button"], input, textarea, select{ cursor: none !important; }
+
+#cursorDot, #cursorRing{
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  border-radius: 50%;
+  opacity: 0;
+  will-change: transform;
+}
+#cursorDot{
+  width: 6px;
+  height: 6px;
+  background: var(--ink);
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  transition: opacity 0.25s ease, background 0.25s ease, width 0.2s ease, height 0.2s ease;
+}
+#cursorRing{
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(20, 18, 15, 0.35);
+  background: transparent;
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  transition: opacity 0.25s ease, width 0.32s var(--ease), height 0.32s var(--ease),
+              background 0.32s ease, border-color 0.32s ease, border-width 0.32s ease;
+}
+body.cursor-ready #cursorDot, body.cursor-ready #cursorRing{ opacity: 1; }
+body.cursor-hidden #cursorDot, body.cursor-hidden #cursorRing{ opacity: 0; }
+#cursorRing.is-active{
+  width: 66px;
+  height: 66px;
+  border-color: var(--accent-color);
+  border-width: 1px;
+  background: var(--accent-soft);
+}
+#cursorDot.is-active{
+  width: 0;
+  height: 0;
+  background: var(--accent-color);
+}
+
+/* Touch devices: restore the native pointer, drop the custom one */
+@media (hover: none), (pointer: coarse){
+  body, a, button, [role="button"], input, textarea, select{ cursor: auto !important; }
+  #cursorDot, #cursorRing{ display: none !important; }
+}
+
+/* ============================================================
+   LAYOUT PRIMITIVES
+   ============================================================ */
+.shell{
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 48px);
+}
+.section{ padding-block: clamp(64px, 9vw, 132px); position: relative; }
+.section + .section{ border-top: 1px solid var(--line); }
+
+.label{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 22px;
+}
+.label::before{
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  flex: none;
+}
+.label__num{ color: var(--accent-color); }
+
+.section__head{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px 40px;
+  margin-bottom: clamp(30px, 4vw, 54px);
+}
+.section__title{
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.6vw, 3.3rem);
+  letter-spacing: -0.025em;
+  max-width: 20ch;
+}
+.section__title em{ font-style: italic; color: var(--accent-color); }
+.section__note{
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  max-width: 34ch;
+  line-height: 1.8;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(250, 248, 244, 0.78);
+  border-bottom: 1px solid var(--line);
+}
+.nav__inner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  height: 66px;
+}
+.nav__mark{
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.nav__mark span{ color: var(--accent-color); }
+.nav__links{
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 34px);
+  font-size: 0.86rem;
+}
+.nav__links a{
+  position: relative;
+  color: var(--muted);
+  padding-block: 4px;
+  transition: color 0.28s ease;
+}
+.nav__links a::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.38s var(--ease);
+}
+.nav__links a:hover{ color: var(--ink); }
+.nav__links a:hover::after{ transform: scaleX(1); }
+.nav__gh{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink) !important;
+  border: 1px solid var(--line-strong);
+  border-radius: 100px;
+  padding: 8px 15px !important;
+  transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+.nav__gh::after{ display: none; }
+.nav__gh:hover{ border-color: var(--accent-color); color: var(--accent-color) !important; background: var(--accent-soft); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  padding-top: clamp(48px, 8vw, 96px);
+  padding-bottom: clamp(56px, 8vw, 104px);
+}
+.hero__grid{
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  align-items: center;
+  gap: clamp(34px, 5vw, 72px);
+}
+.hero__title{
+  font-family: var(--font-display);
+  font-size: clamp(3.1rem, 9vw, 6.4rem);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+  margin-bottom: 26px;
+}
+.hero__title em{ font-style: italic; color: var(--accent-color); }
+.hero__bio{
+  font-size: clamp(1rem, 1.35vw, 1.12rem);
+  line-height: 1.75;
+  color: var(--ink-soft);
+  max-width: 46ch;
+  margin-bottom: 34px;
+}
+.hero__actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 22px;
+  border-radius: 100px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+  transition: transform 0.35s var(--ease), background 0.3s ease, color 0.3s ease,
+              border-color 0.3s ease, box-shadow 0.35s ease;
+}
+.btn i{ font-size: 0.85em; }
+.btn--solid{
+  background: var(--ink);
+  color: #FBF9F5;
+}
+.btn--solid:hover{
+  background: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -16px rgba(194, 65, 12, 0.75);
+}
+.btn--ghost{
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+.btn--ghost:hover{
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  background: var(--accent-soft);
+  transform: translateY(-2px);
+}
+
+/* Profile card */
+.profile{
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 26px;
+  box-shadow: 0 26px 60px -46px rgba(20, 18, 15, 0.55);
+  overflow: hidden;
+}
+.profile::before{
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-color), rgba(194, 65, 12, 0));
+}
+.profile__top{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.profile__avatar{
+  width: 68px;
+  height: 68px;
+  flex: none;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bg-tint);
+  border: 1px solid var(--line);
+  position: relative;
+}
+.profile__avatar img{ width: 100%; height: 100%; object-fit: cover; }
+.profile__avatar::after{
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-line);
+  pointer-events: none;
+}
+.profile__who{ min-width: 0; }
+.profile__name{
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.profile__handle{
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.profile__stats{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.stat{ min-width: 0; }
+.stat__value{
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: var(--ink);
+  line-height: 1.1;
+  display: block;
+}
+.stat__key{
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.profile__foot{
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.profile__foot i{ color: var(--accent-color); font-size: 10px; }
+
+/* ============================================================
+   WORK / REPOS
+   ============================================================ */
+.work__grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+  gap: clamp(14px, 2vw, 22px);
+  perspective: 1200px;
+}
+.work__item{ min-width: 0; }
+
+.card{
+  --gx: 50%;
+  --gy: 50%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 208px;
+  padding: 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  transform-style: preserve-3d;
+  transition: transform 0.55s var(--ease), border-color 0.35s ease, box-shadow 0.45s ease;
+  overflow: hidden;
+  isolation: isolate;
+}
+.card::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(320px 220px at var(--gx) var(--gy), var(--accent-soft), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.card:hover{ border-color: var(--accent-line); box-shadow: 0 30px 50px -40px rgba(20, 18, 15, 0.7); }
+.card:hover::after{ opacity: 1; }
+.card.is-tilting{ transition: transform 0.08s linear, border-color 0.35s ease, box-shadow 0.45s ease; }
+
+.card__head{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.card__name{
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+.card__arrow{
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 11px;
+  transition: transform 0.4s var(--ease), color 0.3s ease, border-color 0.3s ease;
+}
+.card:hover .card__arrow{
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: translate(2px, -2px);
+}
+.card__desc{
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--muted);
+  margin-bottom: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card__meta{
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.card__lang{ display: inline-flex; align-items: center; gap: 7px; }
+.card__dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--accent-color); flex: none; }
+.card__stat{ display: inline-flex; align-items: center; gap: 6px; }
+.card__stat i{ font-size: 10px; color: var(--line-strong); }
+.card:hover .card__stat i{ color: var(--accent-color); }
+
+/* skeleton + states */
+.skeleton{
+  min-height: 208px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(100deg, rgba(20,18,15,0.035) 30%, rgba(20,18,15,0.075) 50%, rgba(20,18,15,0.035) 70%)
+    0 0 / 220% 100% no-repeat,
+    var(--surface);
+  animation: shimmer 1.5s linear infinite;
+}
+@keyframes shimmer{ from{ background-position: 120% 0; } to{ background-position: -60% 0; } }
+
+.state{
+  grid-column: 1 / -1;
+  padding: 34px 26px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.5);
+  text-align: left;
+}
+.state__title{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin-bottom: 8px;
+}
+.state__body{ font-size: 0.9rem; color: var(--muted); max-width: 58ch; }
+.state a{ color: var(--ink); border-bottom: 1px solid var(--accent-line); }
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about__grid{
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(30px, 5vw, 72px);
+  align-items: start;
+}
+.about__body p{ font-size: clamp(0.98rem, 1.2vw, 1.06rem); line-height: 1.8; color: var(--ink-soft); }
+.about__body p + p{ margin-top: 18px; }
+.about__body strong{ color: var(--ink); font-weight: 500; }
+
+.stack{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+.chip{
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border: 1px solid var(--line-strong);
+  border-radius: 100px;
+  padding: 7px 13px;
+  background: var(--surface);
+  transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+}
+.chip:hover{ border-color: var(--accent-color); color: var(--accent-color); background: var(--accent-soft); }
+
+.facts{ display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; }
+.fact{
+  background: var(--surface);
+  padding: 18px 20px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  transition: background 0.3s ease;
+}
+.fact:hover{ background: #FDFBF8; }
+.fact__key{
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex: none;
+}
+.fact__val{ font-size: 0.92rem; color: var(--ink); text-align: right; overflow-wrap: anywhere; }
+.fact__val a:hover{ color: var(--accent-color); }
+
+/* ============================================================
+   CONTACT + FOOTER
+   ============================================================ */
+.contact{ text-align: left; }
+.contact__title{
+  font-family: var(--font-display);
+  font-size: clamp(2.3rem, 7vw, 5rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  max-width: 18ch;
+  margin-bottom: 30px;
+}
+.contact__title em{ font-style: italic; color: var(--accent-color); }
+.contact__links{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 34px;
+}
+.contact__mail{
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 1.7vw, 1.05rem);
+  color: var(--ink);
+  border-bottom: 1px solid var(--accent-line);
+  padding-bottom: 4px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+  overflow-wrap: anywhere;
+}
+.contact__mail:hover{ color: var(--accent-color); border-color: var(--accent-color); }
+
+.footer{
+  border-top: 1px solid var(--line);
+  padding-block: 26px;
+}
+.footer__inner{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 24px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.footer__inner a:hover{ color: var(--accent-color); }
+.footer__dot{ color: var(--accent-color); }
+
+/* ============================================================
+   ANIMATION BASELINE (JS/GSAP drives the rest)
+   ============================================================ */
+.word{ display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.06em; }
+.word__inner{ display: inline-block; transform: translateY(112%); will-change: transform; }
+
+[data-reveal]{ opacity: 0; transform: translateY(26px); }
+[data-reveal].is-in{ opacity: 1; transform: none; transition: opacity 0.85s var(--ease), transform 0.85s var(--ease); }
+
+.hero__eyebrow, .hero__bio, .hero__actions, .profile{ opacity: 0; }
+
+html.no-motion .word__inner{ transform: none !important; }
+html.no-motion [data-reveal],
+html.no-motion .hero__eyebrow,
+html.no-motion .hero__bio,
+html.no-motion .hero__actions,
+html.no-motion .profile{ opacity: 1 !important; transform: none !important; }
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  .word__inner{ transform: none !important; }
+  [data-reveal], .hero__eyebrow, .hero__bio, .hero__actions, .profile{ opacity: 1 !important; transform: none !important; }
+  .skeleton{ animation: none; }
+  *{ transition-duration: 0.01ms !important; }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px){
+  .hero__grid{ grid-template-columns: minmax(0, 1fr); }
+  .profile{ order: 2; max-width: 460px; }
+  .about__grid{ grid-template-columns: minmax(0, 1fr); }
+  .section__note{ max-width: 100%; }
+}
+@media (max-width: 620px){
+  .nav__links{ gap: 14px; font-size: 0.8rem; }
+  .nav__links a:not(.nav__gh){ display: none; }
+  .nav__gh{ padding: 7px 13px !important; }
+  .hero__title{ font-size: clamp(2.7rem, 13vw, 4rem); }
+  .btn{ padding: 12px 18px; font-size: 0.84rem; }
+  .work__grid{ grid-template-columns: minmax(0, 1fr); }
+  .card{ min-height: 0; }
+  .profile{ padding: 20px; }
+  .fact{ flex-direction: column; gap: 4px; }
+  .fact__val{ text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursorRing" aria-hidden="true"></div>
+<div id="cursorDot" aria-hidden="true"></div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="shell nav__inner">
+    <a href="#top" class="nav__mark" aria-label="Sairaj Naik, back to top">SN<span>.</span></a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a class="nav__gh" href="https://github.com/nyksaii" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero shell">
+    <div class="hero__grid">
+      <div>
+        <p class="label hero__eyebrow"><span class="label__num">00</span> Student · Developer · Learner</p>
+
+        <h1 class="hero__title" id="heroTitle">Sairaj <em>Naik</em></h1>
+
+        <p class="hero__bio">
+          I am a passionate and motivated student with a strong interest in technology,
+          programming, and innovation. I enjoy exploring new skills, working on creative
+          projects, and developing practical solutions through technology.
+        </p>
+
+        <div class="hero__actions">
+          <a class="btn btn--solid" href="https://github.com/nyksaii" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-github" aria-hidden="true"></i> View GitHub
+          </a>
+          <a class="btn btn--ghost" href="https://www.linkedin.com/in/sairajnaik01" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i> LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <aside class="profile" aria-label="GitHub profile summary">
+        <div class="profile__top">
+          <div class="profile__avatar">
+            <img id="ghAvatar" src="https://avatars.githubusercontent.com/u/194052068?v=4" alt="Sairaj Naik's GitHub avatar" width="68" height="68" />
+          </div>
+          <div class="profile__who">
+            <p class="profile__name" id="ghName">Sairaj Naik</p>
+            <p class="profile__handle" id="ghHandle">@nyksaii</p>
+          </div>
+        </div>
+
+        <div class="profile__stats">
+          <div class="stat">
+            <span class="stat__value" id="ghRepos" data-count="0">—</span>
+            <span class="stat__key">Repos</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" id="ghFollowers" data-count="0">—</span>
+            <span class="stat__key">Followers</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" id="ghFollowing" data-count="0">—</span>
+            <span class="stat__key">Following</span>
+          </div>
+        </div>
+
+        <p class="profile__foot">
+          <i class="fa-solid fa-circle" aria-hidden="true"></i>
+          <span id="ghStatus">Loading live data from GitHub…</span>
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="section" id="work">
+    <div class="shell">
+      <div class="section__head">
+        <div>
+          <p class="label"><span class="label__num">01</span> Work</p>
+          <h2 class="section__title">Repositories, <em>live</em> from GitHub</h2>
+        </div>
+        <p class="section__note">Fetched from the public GitHub API on load, sorted by stars. Click any card to open the repo.</p>
+      </div>
+
+      <div class="work__grid" id="repoGrid" aria-live="polite" aria-busy="true">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="shell">
+      <div class="section__head">
+        <div>
+          <p class="label"><span class="label__num">02</span> About</p>
+          <h2 class="section__title">A little <em>about</em> me</h2>
+        </div>
+      </div>
+
+      <div class="about__grid">
+        <div class="about__body" data-reveal>
+          <p>
+            I am a passionate and motivated student with a strong interest in
+            <strong>technology, programming, and innovation</strong>. I enjoy exploring new
+            skills, working on creative projects, and developing practical solutions through
+            technology.
+          </p>
+          <p>
+            I am always eager to learn, grow, and take on new opportunities that help me build
+            my professional journey. If you are working on something interesting, I would love
+            to hear about it.
+          </p>
+
+          <div class="stack" id="stack" aria-label="Languages used in public repositories"></div>
+        </div>
+
+        <div class="facts" data-reveal>
+          <div class="fact">
+            <span class="fact__key">Role</span>
+            <span class="fact__val">Student &amp; developer</span>
+          </div>
+          <div class="fact">
+            <span class="fact__key">Focus</span>
+            <span class="fact__val">Programming, innovation, practical problem solving</span>
+          </div>
+          <div class="fact">
+            <span class="fact__key">GitHub</span>
+            <span class="fact__val"><a href="https://github.com/nyksaii" target="_blank" rel="noopener noreferrer">github.com/nyksaii</a></span>
+          </div>
+          <div class="fact">
+            <span class="fact__key">LinkedIn</span>
+            <span class="fact__val"><a href="https://www.linkedin.com/in/sairajnaik01" target="_blank" rel="noopener noreferrer">in/sairajnaik01</a></span>
+          </div>
+          <div class="fact">
+            <span class="fact__key">Email</span>
+            <span class="fact__val"><a href="mailto:nyksairaj5@gmail.com">nyksairaj5@gmail.com</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact" id="contact">
+    <div class="shell">
+      <p class="label"><span class="label__num">03</span> Contact</p>
+      <h2 class="contact__title">Let's build <em>something</em> together.</h2>
+
+      <div class="contact__links" data-reveal>
+        <a class="btn btn--solid" href="https://www.linkedin.com/in/sairajnaik01" target="_blank" rel="noopener noreferrer">
+          <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i> Connect on LinkedIn
+        </a>
+        <a class="btn btn--ghost" href="https://github.com/nyksaii" target="_blank" rel="noopener noreferrer">
+          <i class="fa-brands fa-github" aria-hidden="true"></i> Follow on GitHub
+        </a>
+      </div>
+
+      <a class="contact__mail" href="mailto:nyksairaj5@gmail.com" data-email>nyksairaj5@gmail.com</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="shell footer__inner">
+    <span>© <span id="year">2026</span> Sairaj Naik</span>
+    <span>Built with vanilla JS <span class="footer__dot">·</span> GSAP <span class="footer__dot">·</span> GitHub API</span>
+    <a href="#top">Back to top</a>
+  </div>
+</footer>
+
+<!-- ============ LIBRARIES ============ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" referrerpolicy="no-referrer"></script>
+
+<!-- ============ APPLICATION ============ -->
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------------------------------------------------
+     HARDCODED IDENTITY
+     --------------------------------------------------------- */
+  const GITHUB_USERNAME = "nyksaii";
+  const FALLBACK_EMAIL = "nyksairaj5@gmail.com";
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hasGSAP = typeof window.gsap !== "undefined";
+  const docEl = document.documentElement;
+
+  if (!hasGSAP || reduceMotion) docEl.classList.add("no-motion");
+
+  /* keep the mailto link honest even if markup is edited */
+  document.querySelectorAll("[data-email]").forEach(function (a) {
+    a.href = "mailto:" + FALLBACK_EMAIL;
+    a.textContent = FALLBACK_EMAIL;
+  });
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ---------------------------------------------------------
+     1. CUSTOM CURSOR  (dot tracks instantly, ring eases behind)
+     --------------------------------------------------------- */
+  (function cursor() {
+    const dot = document.getElementById("cursorDot");
+    const ring = document.getElementById("cursorRing");
+    if (!dot || !ring) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
+    let mx = window.innerWidth / 2;
+    let my = window.innerHeight / 2;
+    let rx = mx;
+    let ry = my;
+    let visible = false;
+
+    function place(el, x, y) {
+      el.style.transform = "translate3d(" + x + "px," + y + "px,0) translate(-50%,-50%)";
+    }
+
+    window.addEventListener(
+      "mousemove",
+      function (e) {
+        mx = e.clientX;
+        my = e.clientY;
+        place(dot, mx, my);
+        if (!visible) {
+          visible = true;
+          rx = mx;
+          ry = my;
+          document.body.classList.add("cursor-ready");
+        }
+      },
+      { passive: true }
+    );
+
+    document.addEventListener("mouseleave", function () {
+      document.body.classList.add("cursor-hidden");
+    });
+    document.addEventListener("mouseenter", function () {
+      document.body.classList.remove("cursor-hidden");
+    });
+
+    const INTERACTIVE = "a, button, [role='button'], input, textarea, select, .card, .chip";
+    document.addEventListener(
+      "mouseover",
+      function (e) {
+        if (e.target.closest && e.target.closest(INTERACTIVE)) {
+          ring.classList.add("is-active");
+          dot.classList.add("is-active");
+        }
+      },
+      { passive: true }
+    );
+    document.addEventListener(
+      "mouseout",
+      function (e) {
+        if (e.target.closest && e.target.closest(INTERACTIVE)) {
+          ring.classList.remove("is-active");
+          dot.classList.remove("is-active");
+        }
+      },
+      { passive: true }
+    );
+
+    (function loop() {
+      rx += (mx - rx) * 0.16;
+      ry += (my - ry) * 0.16;
+      place(ring, rx, ry);
+      requestAnimationFrame(loop);
+    })();
+  })();
+
+  /* ---------------------------------------------------------
+     2. HERO ENTRANCE  (word-by-word reveal via GSAP)
+     --------------------------------------------------------- */
+  (function heroReveal() {
+    const title = document.getElementById("heroTitle");
+    if (title) {
+      const words = title.textContent.trim().split(/\s+/);
+      const italic = title.querySelector("em");
+      const accentWord = italic ? italic.textContent.trim() : null;
+
+      title.innerHTML = words
+        .map(function (w) {
+          const inner =
+            accentWord && w === accentWord
+              ? '<em><span class="word__inner">' + w + "</span></em>"
+              : '<span class="word__inner">' + w + "</span>";
+          return '<span class="word">' + inner + "</span>";
+        })
+        .join(" ");
+    }
+
+    if (!hasGSAP || reduceMotion) return;
+
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    tl.from(".nav__inner", { y: -18, opacity: 0, duration: 0.7 })
+      .to(".hero__eyebrow", { opacity: 1, y: 0, duration: 0.7, startAt: { y: 14 } }, "-=0.35")
+      .to(".hero .word__inner", { yPercent: 0, duration: 1.05, stagger: 0.075, ease: "power4.out" }, "-=0.4")
+      .to(".hero__bio", { opacity: 1, y: 0, duration: 0.85, startAt: { y: 18 } }, "-=0.55")
+      .to(".hero__actions", { opacity: 1, y: 0, duration: 0.8, startAt: { y: 16 } }, "-=0.6")
+      .to(".profile", { opacity: 1, y: 0, duration: 1, startAt: { y: 26, scale: 0.98 } }, "-=0.85");
+  })();
+
+  /* ---------------------------------------------------------
+     3. SCROLL REVEAL  (IntersectionObserver + GSAP)
+     --------------------------------------------------------- */
+  const revealObserver =
+    "IntersectionObserver" in window
+      ? new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              const el = entry.target;
+              revealObserver.unobserve(el);
+
+              if (hasGSAP && !reduceMotion) {
+                gsap.to(el, {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.9,
+                  ease: "power3.out",
+                  delay: parseFloat(el.dataset.delay || 0)
+                });
+              } else {
+                el.classList.add("is-in");
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+        )
+      : null;
+
+  function watchReveal(nodes) {
+    nodes.forEach(function (el) {
+      if (el.dataset.watched) return;
+      el.dataset.watched = "1";
+      if (revealObserver) revealObserver.observe(el);
+      else el.classList.add("is-in");
+    });
+  }
+
+  watchReveal(Array.prototype.slice.call(document.querySelectorAll("[data-reveal]")));
+
+  /* ---------------------------------------------------------
+     4. 3D TILT  (vanilla mousemove, pointer-fine only)
+     --------------------------------------------------------- */
+  const canTilt = window.matchMedia("(hover: hover) and (pointer: fine)").matches && !reduceMotion;
+
+  function initTilt(card) {
+    if (!canTilt || card.dataset.tilt === "1") return;
+    card.dataset.tilt = "1";
+
+    const MAX = 7;
+
+    card.addEventListener(
+      "mousemove",
+      function (e) {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+
+        card.classList.add("is-tilting");
+        card.style.transform =
+          "perspective(900px) rotateY(" +
+          (px * MAX).toFixed(2) +
+          "deg) rotateX(" +
+          (-py * MAX).toFixed(2) +
+          "deg) translateY(-4px)";
+        card.style.setProperty("--gx", ((px + 0.5) * 100).toFixed(1) + "%");
+        card.style.setProperty("--gy", ((py + 0.5) * 100).toFixed(1) + "%");
+      },
+      { passive: true }
+    );
+
+    card.addEventListener("mouseleave", function () {
+      card.classList.remove("is-tilting");
+      card.style.transform = "";
+    });
+  }
+
+  /* ---------------------------------------------------------
+     5. GITHUB API  (profile + repos, sorted by stars)
+     --------------------------------------------------------- */
+  const grid = document.getElementById("repoGrid");
+  const LANG_COLORS = {
+    JavaScript: "#C2410C",
+    TypeScript: "#3178C6",
+    HTML: "#E34C26",
+    CSS: "#563D7C",
+    Python: "#3572A5",
+    Java: "#B07219",
+    "C++": "#F34B7D",
+    C: "#555555",
+    "C#": "#178600",
+    Go: "#00ADD8",
+    Rust: "#DEA584",
+    PHP: "#4F5D95",
+    Ruby: "#701516",
+    Shell: "#89E051",
+    Vue: "#41B883",
+    Kotlin: "#A97BFF",
+    Swift: "#F05138"
+  };
+
+  function esc(str) {
+    return String(str == null ? "" : str).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function countUp(el, target) {
+    if (!el) return;
+    if (!hasGSAP || reduceMotion) {
+      el.textContent = target;
+      return;
+    }
+    const obj = { v: 0 };
+    gsap.to(obj, {
+      v: target,
+      duration: 1.1,
+      ease: "power2.out",
+      onUpdate: function () {
+        el.textContent = Math.round(obj.v);
+      },
+      onComplete: function () {
+        el.textContent = target;
+      }
+    });
+  }
+
+  function renderProfile(user) {
+    const avatar = document.getElementById("ghAvatar");
+    const name = document.getElementById("ghName");
+    const handle = document.getElementById("ghHandle");
+    const status = document.getElementById("ghStatus");
+
+    if (user.avatar_url) {
+      avatar.src = user.avatar_url;
+      avatar.alt = (user.name || user.login) + "'s GitHub avatar";
+    }
+    if (name) name.textContent = user.name || "Sairaj Naik";
+    if (handle) handle.textContent = "@" + user.login;
+
+    countUp(document.getElementById("ghRepos"), user.public_repos || 0);
+    countUp(document.getElementById("ghFollowers"), user.followers || 0);
+    countUp(document.getElementById("ghFollowing"), user.following || 0);
+
+    if (status) {
+      const bits = [];
+      if (user.location) bits.push(esc(user.location));
+      if (user.company) bits.push(esc(user.company));
+      bits.push("Synced with the GitHub API just now");
+      status.innerHTML = bits.join(" · ");
+    }
+  }
+
+  function renderStack(repos) {
+    const stack = document.getElementById("stack");
+    if (!stack) return;
+
+    const seen = [];
+    repos.forEach(function (r) {
+      if (r.language && seen.indexOf(r.language) === -1) seen.push(r.language);
+    });
+
+    stack.innerHTML = seen
+      .slice(0, 8)
+      .map(function (lang) {
+        return '<span class="chip">' + esc(lang) + "</span>";
+      })
+      .join("");
+  }
+
+  function repoCard(repo, index) {
+    const lang = repo.language || "Code";
+    const color = LANG_COLORS[lang] || "var(--accent-color)";
+    const updated = repo.pushed_at
+      ? new Date(repo.pushed_at).toLocaleDateString("en-GB", { month: "short", year: "numeric" })
+      : "";
+
+    const item = document.createElement("div");
+    item.className = "work__item";
+    item.setAttribute("data-reveal", "");
+    item.dataset.delay = String(Math.min(index, 6) * 0.07);
+
+    item.innerHTML =
+      '<a class="card" href="' + esc(repo.html_url) + '" target="_blank" rel="noopener noreferrer">' +
+        '<div class="card__head">' +
+          '<span class="card__name">' + esc(repo.name) + "</span>" +
+          '<span class="card__arrow"><i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i></span>' +
+        "</div>" +
+        '<p class="card__desc">' + esc(repo.description || "No description provided for this repository yet.") + "</p>" +
+        '<div class="card__meta">' +
+          '<span class="card__lang"><span class="card__dot" style="background:' + color + '"></span>' + esc(lang) + "</span>" +
+          '<span class="card__stat"><i class="fa-regular fa-star" aria-hidden="true"></i>' + (repo.stargazers_count || 0) + "</span>" +
+          '<span class="card__stat"><i class="fa-solid fa-code-fork" aria-hidden="true"></i>' + (repo.forks_count || 0) + "</span>" +
+          (updated ? '<span class="card__stat">Updated ' + esc(updated) + "</span>" : "") +
+        "</div>" +
+      "</a>";
+
+    initTilt(item.querySelector(".card"));
+    return item;
+  }
+
+  function renderRepos(repos) {
+    grid.setAttribute("aria-busy", "false");
+    grid.innerHTML = "";
+
+    const publicRepos = (repos || []).filter(function (r) {
+      return !r.fork && !r.archived;
+    });
+
+    if (!publicRepos.length) {
+      const state = document.createElement("div");
+      state.className = "state";
+      state.innerHTML =
+        '<p class="state__title">Nothing public yet</p>' +
+        '<p class="state__body">This account has no public repositories at the moment. ' +
+        'New work will appear here automatically — or browse ' +
+        '<a href="https://github.com/' + GITHUB_USERNAME + '" target="_blank" rel="noopener noreferrer">github.com/' +
+        GITHUB_USERNAME + "</a>.</p>";
+      grid.appendChild(state);
+      return;
+    }
+
+    const sorted = publicRepos.slice().sort(function (a, b) {
+      if ((b.stargazers_count || 0) !== (a.stargazers_count || 0)) {
+        return (b.stargazers_count || 0) - (a.stargazers_count || 0);
+      }
+      return new Date(b.pushed_at || 0) - new Date(a.pushed_at || 0);
+    });
+
+    const fragment = document.createDocumentFragment();
+    sorted.slice(0, 6).forEach(function (repo, i) {
+      fragment.appendChild(repoCard(repo, i));
+    });
+    grid.appendChild(fragment);
+
+    watchReveal(Array.prototype.slice.call(grid.querySelectorAll("[data-reveal]")));
+    renderStack(sorted);
+  }
+
+  function renderError(message) {
+    grid.setAttribute("aria-busy", "false");
+    grid.innerHTML =
+      '<div class="state">' +
+        '<p class="state__title">Could not reach GitHub</p>' +
+        '<p class="state__body">' + esc(message) + " You can still browse the work directly at " +
+        '<a href="https://github.com/' + GITHUB_USERNAME + '" target="_blank" rel="noopener noreferrer">github.com/' +
+        GITHUB_USERNAME + "</a>.</p>" +
+      "</div>";
+
+    const status = document.getElementById("ghStatus");
+    if (status) status.textContent = "Live data unavailable right now";
+  }
+
+  async function loadGitHub() {
+    try {
+      const [userRes, repoRes] = await Promise.all([
+        fetch("https://api.github.com/users/" + GITHUB_USERNAME, {
+          headers: { Accept: "application/vnd.github+json" }
+        }),
+        fetch("https://api.github.com/users/" + GITHUB_USERNAME + "/repos?per_page=100&sort=updated", {
+          headers: { Accept: "application/vnd.github+json" }
+        })
+      ]);
+
+      if (!userRes.ok) {
+        const limited = userRes.status === 403 || userRes.status === 429;
+        throw new Error(
+          limited
+            ? "GitHub's rate limit for anonymous requests was hit."
+            : "The GitHub API returned " + userRes.status + "."
+        );
+      }
+
+      const user = await userRes.json();
+      const repos = repoRes.ok ? await repoRes.json() : [];
+
+      renderProfile(user);
+      renderRepos(repos);
+    } catch (err) {
+      renderError(err && err.message ? err.message : "A network error occurred.");
+    }
+  }
+
+  loadGitHub();
+})();
+</script>
+</body>
+</html>
